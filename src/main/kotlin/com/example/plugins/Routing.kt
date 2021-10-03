@@ -6,7 +6,6 @@ import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import io.ktor.util.cio.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.File
@@ -73,7 +72,6 @@ fun Application.configureRouting(seed: Int) {
             call.respond(RandomLong(randomNumber))
             val now = LocalDateTime.now()
             val file = File("results.txt")
-            file.writeChannel()
             fileWriteMutex.withLock {
                 file.appendText("$now $randomNumber\n")
             }
