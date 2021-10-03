@@ -15,12 +15,13 @@ fun main(args: Array<String>) {
     val parser = ArgParser("ktor-random-gen")
     val host by parser.option(ArgType.String).default("0.0.0.0")
     val port by parser.option(ArgType.Int).default(8080)
+    val seed by parser.option(ArgType.Int, description = "Seed for random generator").default(0)
     parser.parse(args)
     embeddedServer(Netty, port = port, host = host) {
         install(ContentNegotiation) {
             json()
         }
         configureMonitoring()
-        configureRouting()
+        configureRouting(seed)
     }.start(wait = true)
 }

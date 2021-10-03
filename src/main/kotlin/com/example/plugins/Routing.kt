@@ -17,9 +17,9 @@ import kotlin.random.nextLong
 private val fileWriteMutex = Mutex()
 
 @Suppress("BlockingMethodInNonBlockingContext")
-fun Application.configureRouting() {
-    val random = Random(2354)
-    val symbols = ('A'..'Z') + ('a'..'z') + ('0'..'9') + ".,;:><?!@#%$^*()-_+=/".toList()
+fun Application.configureRouting(seed: Int) {
+    val random = Random(seed)
+    val symbols = ('A'..'Z') + ('a'..'z') + ('0'..'9') + ".,;:><?!@#%$^*()-_+=/ ".toList()
     // Starting point for a Ktor app:
     routing {
 
@@ -65,6 +65,10 @@ fun Application.configureRouting() {
                     return@get
                 }
             } ?: Long.MAX_VALUE
+            if (fromLimit > toLimit) {
+                call.respond(HttpStatusCode.BadRequest, "Upper limit is lower than lower limit")
+                return@get
+            }
             val randomNumber = random.nextLong(fromLimit..toLimit)
             call.respond(RandomLong(randomNumber))
             val now = LocalDateTime.now()
