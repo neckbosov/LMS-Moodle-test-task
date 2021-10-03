@@ -19,7 +19,7 @@ private val fileWriteMutex = Mutex()
 @Suppress("BlockingMethodInNonBlockingContext")
 fun Application.configureRouting(seed: Int) {
     val random = Random(seed)
-    val symbols = ('A'..'Z') + ('a'..'z') + ('0'..'9') + ".,;:><?!@#%$^*()-_+=/ ".toList()
+    val symbols = ('A'..'Z') + ('a'..'z') + ('0'..'9') + ".,;:><?!@#%$^*()-_+=/".toList()
     // Starting point for a Ktor app:
     routing {
 
