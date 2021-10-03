@@ -36,7 +36,7 @@ fun Application.configureRouting(seed: Int) {
                     call.respond(RandomString(randomString))
                     // Ktor still does not have I/O subsystem for file operations, because of that we use blocking I/O
                     fileWriteMutex.withLock {
-                        file.appendText("$now $randomString\n")
+                        file.appendText("$now \"$randomString\"\n")
                     }
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "String length should be an integer")
